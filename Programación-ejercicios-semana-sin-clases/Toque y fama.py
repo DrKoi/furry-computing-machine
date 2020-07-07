@@ -10,11 +10,15 @@ def Numeroazar():
     i = 0
     azar[i] = 10
     import random as rn
-    while i < 6:
+    for i in range(7):
+        azar[i] = rn.randint(0,9)
+
+
+    """ while i < 6:
         azar[i] = rn.randint(0,9)
         while azar[i] == azar[i-1] or azar[i] == azar[i-2] or azar[i] == azar[i-3] or azar[i] == azar[i-4] or azar[i] == azar[i-5]:
             azar[i] = rn.randint(0,9)
-        i = i + 1
+        i = i + 1 """
 
 
 def Juego():
@@ -25,7 +29,7 @@ def Juego():
         i = 0
         while i < 6:
             for i in range(6) :
-                numero[i] = int(input("Cifra I: "))
+                numero[i] = int(input("Cifra ", i + 1,": "))
 
 
 arreglo()
