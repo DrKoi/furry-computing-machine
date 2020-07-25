@@ -1,8 +1,9 @@
 def DIM_VECTOR(Max, Valor = 0):
     arreglo = []    
-    for i in range(Max):
+    for j in range(Max):
         arreglo.append(Valor)
     return arreglo
+    
 NUMEROS = DIM_VECTOR(10)
 for i in range(10):
     print("Ingrese numero para poblar arreglo NUMEROS[", i, "]: ", sep="", end="")
