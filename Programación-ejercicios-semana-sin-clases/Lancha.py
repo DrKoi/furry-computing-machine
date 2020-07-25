@@ -5,7 +5,7 @@ def DefinirArreglo():
         nombre.append("")
         edad.append(0)
         peso.append("")
-        i = i + 1
+        
 
 def IngresoDatos():
     global cant
