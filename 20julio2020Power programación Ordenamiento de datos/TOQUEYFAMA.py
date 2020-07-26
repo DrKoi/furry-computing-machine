@@ -1,41 +1,31 @@
-def arreglo():
-    global numero, azar
-    numero = [0]; azar = [0]
-    for i in range(1, 100):
-        numero.append(0)
-        azar.append(0)
-        i = i + 1
+def DIM_VECTOR(Max, Valor = 0):
+    arreglo = []
+    for i in range(Max):
+        arreglo.append(Valor)
+    return arreglo
 
-def Numeroazar():
-    i = 0
-    azar[i] = 10
-    import random as rn
-    for i in range(7):
-        azar[i] = rn.randint(0,9)
-
-
-    """ while i < 6:
-        azar[i] = rn.randint(0,9)
-        while azar[i] == azar[i-1] or azar[i] == azar[i-2] or azar[i] == azar[i-3] or azar[i] == azar[i-4] or azar[i] == azar[i-5]:
-            azar[i] = rn.randint(0,9)
-        i = i + 1 """
-
-
-def Juego():
-    cont = 0
-    fama = 0
-    toque = 0
-    while cont < 15 and fama != 6:
-        i = 0
-        while i < 6:
-            for i in range(6) :
-                numero[i] = int(input("Cifra ", i + 1,": "))
-
-
-arreglo()
-Numeroazar()
-Juego()
-
+A = DIM_VECTOR(6)
+B = DIM_VECTOR(6)
+import random as rn
+for i in range(6):
+    A[i] = rn.randint(0,9)
+    existe = True
+    while existe:
+        existe = False
+        for j in range(i):
+            if A[i] == A[j]:
+                existe = True 
+            if existe:
+                A[i] = rn.randint(0,9)
+cont = 15; fama = 0; toque = 0
+while cont > 0 and fama != 6 and toque != 6:
+    print("Toque y Fama. Le quedan ", cont, "turnos")
+    numero = int(input("Ingrese un número para jugar 'Toque y Fama': ", sep=""))
+    while numero < 0 or numero > 9:
+        print("El número ingresado debe estar entre 0 y 9")
+        numero = int(input("Ingrese un número para jugar 'Toque y Fama': ", sep=""))
+    
+    
 
 """ 
 Se pide implementar el juego “Toque y Fama”, pero para números de 6 cifras. 
