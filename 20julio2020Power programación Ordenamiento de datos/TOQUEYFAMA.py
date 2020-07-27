@@ -9,25 +9,39 @@ B = DIM_VECTOR(6)
 import random as rn
 for i in range(6):
     A[i] = rn.randint(0,9)
-    existe = True
-    while existe:
-        existe = False
-        for j in range(i):
-            if A[i] == A[j]:
-                existe = True 
-            if existe:
-                A[i] = rn.randint(0,9)
+for i in range(6):
+	existe = True
+	while existe:
+		existe = False
+		for j in range(i):
+			if A[i] == A[j]:
+				existe = True
+			if existe:
+				A[i] = rn.randint(0,9)
 print(A)
-cont = 15; 
-while cont > 0 or (fama != 6 and toque != 6):
-    print("Toque y Fama. Le quedan ", cont, "turnos")
+cont = 15; fama = 0; toque = 0
+while cont > 0 and (fama != 6 and toque != 6):
+	B = DIM_VECTOR(6)
+	print("Toque y Fama. Le quedan ", cont, "turnos")
 	cont = cont - 1
 	print("Debe ingresar el valor de 6 cifras con que trabajar: ")
 	for i in range(6):
 		B[i] = int(input("Ingrese un digito (entre 0 y 9): "))
-		while len(B[i]) > 1:
-			print("Ingrese los números de a uno")
-			B[i] = int(input("Ingrese digito (uno por vez): "))
+		while len(str(B[i])) > 1:
+					print("Ingrese los números de a uno")
+					B[i] = int(input("Ingrese digito (uno por vez): "))
+		existe = True
+		while existe:
+			existe = False
+			for j in range(i):
+				if B[i] == B[j]:
+					existe = True 
+			if existe:
+				print("Error. El valor está repetido.")
+				B[i] = int(input("Ingrese un digito (entre 0 y 9): "))
+				while len(str(B[i])) > 1:
+					print("Ingrese los números de a uno")
+					B[i] = int(input("Ingrese digito (uno por vez): "))
 	print(B)
 	fama = 0; toque = 0
 	for i in range(6):
@@ -36,9 +50,8 @@ while cont > 0 or (fama != 6 and toque != 6):
 		for j in range(6):
 			if B[i] == A[j]:
 				toque = toque + 1
-	
-    
-    
+	print("Toque: ", toque, "Fama: ", fama)
+
 
 """ 
 Se pide implementar el juego “Toque y Fama”, pero para números de 6 cifras. 
