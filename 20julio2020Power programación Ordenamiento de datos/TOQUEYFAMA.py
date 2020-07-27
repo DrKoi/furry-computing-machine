@@ -17,13 +17,26 @@ for i in range(6):
                 existe = True 
             if existe:
                 A[i] = rn.randint(0,9)
-cont = 15; fama = 0; toque = 0
-while cont > 0 and fama != 6 and toque != 6:
+print(A)
+cont = 15; 
+while cont > 0 or (fama != 6 and toque != 6):
     print("Toque y Fama. Le quedan ", cont, "turnos")
-    numero = int(input("Ingrese un número para jugar 'Toque y Fama': ", sep=""))
-    while numero < 0 or numero > 9:
-        print("El número ingresado debe estar entre 0 y 9")
-        numero = int(input("Ingrese un número para jugar 'Toque y Fama': ", sep=""))
+	cont = cont - 1
+	print("Debe ingresar el valor de 6 cifras con que trabajar: ")
+	for i in range(6):
+		B[i] = int(input("Ingrese un digito (entre 0 y 9): "))
+		while len(B[i]) > 1:
+			print("Ingrese los números de a uno")
+			B[i] = int(input("Ingrese digito (uno por vez): "))
+	print(B)
+	fama = 0; toque = 0
+	for i in range(6):
+		if A[i] == B[i]:
+			fama = fama + 1
+		for j in range(6):
+			if B[i] == A[j]:
+				toque = toque + 1
+	
     
     
 
