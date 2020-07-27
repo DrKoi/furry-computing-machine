@@ -65,4 +65,7 @@ El computador le indicará el número de Famas y de Toques.
 Por ejemplo, si el usuario digita  7 4 2 9 1 6, el computador debe indicar “1 Fama, 2 toques”. 
 -El programa debe terminar al cumplirse 15 intentos o al tener la 6 Famas. 
 -Trabajar con 2 arreglos de 6 elementos numéricos cada uno. 
+
+AVANZADO: Lo mismo, pero que el usuario ingrese el número de 6 cifras como un solo 
+número (742916 y el programa separe las cifras para almacenarlas en el arreglo B). 
 """
