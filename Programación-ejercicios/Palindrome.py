@@ -17,11 +17,16 @@ while I <= len(A)-1 and I <= len(palabra)-1:
 
 """ i = 0; j = n - 1; Sw = False
 while i != 0:
-    if A[i] == A[j]:
+    if A[i] != A[j]:
         Sw = True
     i = i + 1
     j = j - 1 """
-
+print(A)
+sw = False
 for i in range(n):
-    if A[i] == A[-(i+1)]:
-
+    if A[i] != A[-(i+1)]:
+        sw = True
+if sw == False:
+    print("Palíndrome")
+else:
+    print("No es Palíndrome")
