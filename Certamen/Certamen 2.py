@@ -1,4 +1,4 @@
-# Kevin Figueroa Cueto 192-A
+# Hay que arreglarlo
 # al principio uso una función para asignar la cantidad de elementos a los arreglos
 # luego viene la lectura y validación
 # ocupé un switch con true y false para la validación de los datos ordenados, despues un if para ver si termina o sigue
