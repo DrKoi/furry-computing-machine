@@ -1,243 +1,3 @@
-import random as rn
-
-def vector(cantidad, valorInicial = 0):
-  arreglo = []
-  for i in range(cantidad):
-    arreglo.append(valorInicial)
-  return arreglo
-
-def matrix(filas, columnas, valorInicial = 0):
-  arreglo = []
-  for i in range(filas):
-    arreglo.append([])
-    for j in range(columnas):
-      arreglo[i].append(valorInicial)
-  return arreglo
-
-def mostrar_matriz(tamaño, matriz):
-  for i in range(tamaño):
-    for j in range(tamaño):
-      print(str(matriz[i][j]).rjust(4), end=" ")
-    print("\n")
-
-dimensiones_matriz = int(input("Dimensiones: "))
-tablero = matrix(dimensiones_matriz, dimensiones_matriz)
-
-print("\nDatos agujeros: ")
-cantidad_agujeros = int(input("Ingrese cantidad de agujeros: "))
-pos_FILA_agujero = vector(cantidad_agujeros)
-pos_COLUMNA_agujero = vector(cantidad_agujeros)
-for i in range(cantidad_agujeros):
-  pos_FILA_agujero[i] = int(input("Ingrese la fila del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
-  pos_COLUMNA_agujero[i] = int(input("Ingrese la columna del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
-  while (pos_FILA_agujero[i] == 0 and pos_COLUMNA_agujero[i] == 0) or (pos_FILA_agujero[i] == dimensiones_matriz - 1 and pos_COLUMNA_agujero[i] == dimensiones_matriz - 1):
-    print("El agujero no puede estar en el mismo lugar que el gusano")
-    pos_FILA_agujero[i] = int(input("Ingrese la fila del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
-    pos_COLUMNA_agujero[i] = int(input("Ingrese la columna del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
-  
-  while pos_FILA_agujero[i] < 0 or pos_COLUMNA_agujero[i] < 0 or pos_FILA_agujero[i] > dimensiones_matriz - 1 or pos_COLUMNA_agujero[i] > dimensiones_matriz - 1:
-    print("Error, el agujero está fuera de la matriz... Vuelva a ingresar")
-    pos_FILA_agujero[i] = int(input("Ingrese la fila del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
-    pos_COLUMNA_agujero[i] = int(input("Ingrese la columna del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
-  
-  tablero[pos_FILA_agujero[i]][pos_COLUMNA_agujero[i]] = -1
-  print()
-
-print("\nDatos comida: ")
-cantidad_comida = int(input("Ingrese cantidad de comida: "))
-pos_FILA_comida = vector(cantidad_comida) 
-pos_COLUMNA_comida = vector(cantidad_comida)
-valor_comida = vector(cantidad_comida)
-
-for i in range(cantidad_comida):
-  pos_FILA_comida[i] = int(input("Ingrese la fila del comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): ")) 
-  pos_COLUMNA_comida[i] = int(input("Ingrese la columna del comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
-  while (pos_FILA_comida[i] == 0 and pos_COLUMNA_comida[i] == 0) or (pos_FILA_comida[i] == dimensiones_matriz - 1 and pos_COLUMNA_comida[i] == dimensiones_matriz - 1):
-    print("La comida no puede estar en el mismo lugar que el gusano")
-    pos_FILA_comida[i] = int(input("Ingrese la fila del comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): ")) 
-    pos_COLUMNA_comida[i] = int(input("Ingrese la columna del comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
-
-  while pos_FILA_comida[i] < 0 or pos_COLUMNA_comida[i] < 0 or pos_FILA_comida[i] > dimensiones_matriz - 1 or pos_COLUMNA_comida[i] > dimensiones_matriz - 1:
-    print("Error, la comida está fuera de la matriz... Vuelva a ingresar")
-    pos_FILA_comida[i] = int(input("Ingrese la fila de la comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
-    pos_COLUMNA_comida[i] = int(input("Ingrese la columna de la comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
-
-  valor_comida[i] = int(input("Ingrese el valor de la comida (Máximo 5): "))
-  while valor_comida[i] > 5 or valor_comida[i] < 1:
-    valor_comida[i] = int(input("Vuelva a ingresar el valor de la comida (Máximo 5): "))
-  print()
-  tablero[pos_FILA_comida[i]][pos_COLUMNA_comida[i]] = valor_comida[i]
-
-gusano_1 = 1; G1_F = 0; G1_C = 0
-gusano_2 = 1; G2_F = dimensiones_matriz - 1; G2_C = dimensiones_matriz - 1
-tablero[G1_F][G1_C] = gusano_1; tablero[G2_F][G2_C] = gusano_2
-
-for i in range(dimensiones_matriz):
-  for j in range(dimensiones_matriz):
-    print(str(tablero[i][j]).rjust(4), end=" ")
-  print("\n")
-for i in range(cantidad_agujeros):
-  print("Posición agujero "+str(i + 1)+": ", pos_FILA_agujero[i], ", ", pos_COLUMNA_agujero[i])
-for i in range(cantidad_comida):
-  print("Posición comida "+str(i + 1)+": ", pos_FILA_comida[i], ", ", pos_COLUMNA_comida[i])
-input()
-
-gusanos_muertos = False
-g1_muerto = False; g2_muerto = False
-sw = 1
-cont = 0; cont_G1 = 0; cont_G2 = 0
-while not(gusanos_muertos):
-  
-  #Movimiento Gusano 1
-  if not(g1_muerto) and sw == 1:
-    cont_G1 += 1 
-    direccion = rn.randint(0,3)
-    print(direccion, G1_F, G1_C)
-    #ARRIBA
-    if direccion == 0 and G1_F > 0: 
-      if tablero[G1_F - 1][G1_C] == -1 or (G2_F == G1_F - 1 and G2_C == G1_C and gusano_2 > gusano_1):
-        g1_muerto = True
-        gusano_2 = gusano_1 + gusano_2
-        tablero[G1_F][G1_C] = 0
-      elif (G2_F == G1_F - 1 and G2_C == G1_C and gusano_2 < gusano_1):
-        g2_muerto = True
-        gusano_1 = gusano_1 + gusano_2
-        tablero[G2_F][G2_C] = 0
-      else:
-        aux = tablero[G1_F][G1_C]
-        tablero[G1_F][G1_C] = 0
-        tablero[G1_F - 1][G1_C] = tablero[G1_F - 1][G1_C] + aux
-        G1_F = G1_F - 1
-    #DERECHA
-    if direccion == 1 and G1_C < dimensiones_matriz - 1: 
-      if tablero[G1_F][G1_C + 1] == -1  or (G2_F == G1_F and G2_C == G1_C + 1 and gusano_2 > gusano_1):
-        g1_muerto = True
-        gusano_2 = gusano_1 + gusano_2
-        tablero[G1_F][G1_C] = 0
-      elif (G2_F == G1_F and G2_C == G1_C + 1 and gusano_2 < gusano_1):
-        g2_muerto = True
-        gusano_1 = gusano_1 + gusano_2
-        tablero[G2_F][G2_C] = 0
-      else:
-        aux = tablero[G1_F][G1_C]
-        tablero[G1_F][G1_C] = 0
-        tablero[G1_F][G1_C + 1] = tablero[G1_F][G1_C + 1] + aux
-        G1_C = G1_C + 1
-    #ABAJO
-    if direccion == 2 and G1_F < dimensiones_matriz - 1: 
-      if tablero[G1_F + 1][G1_C] == -1  or (G2_F == G1_F + 1 and G2_C == G1_C and gusano_2 > gusano_1):
-        g1_muerto = True
-        gusano_2 = gusano_1 + gusano_2
-        tablero[G1_F][G1_C] = 0
-      elif (G2_F == G1_F + 1 and G2_C == G1_C and gusano_2 < gusano_1):
-        g2_muerto = True
-        gusano_1 = gusano_1 + gusano_2
-        tablero[G2_F][G2_C] = 0
-      else:
-        aux = tablero[G1_F][G1_C]
-        tablero[G1_F][G1_C] = 0
-        tablero[G1_F + 1][G1_C] = tablero[G1_F + 1][G1_C] + aux
-        G1_F = G1_F + 1
-    #IZQUIERDA
-    if direccion == 3 and G1_C > 0: 
-      if tablero[G1_F][G1_C - 1] == -1 or (G2_F == G1_F and G2_C == G1_C - 1 and gusano_2 > gusano_1):
-        g1_muerto = True
-        gusano_2 = gusano_1 + gusano_2
-        tablero[G1_F][G1_C] = 0
-      elif (G2_F == G1_F and G2_C == G1_C - 1 and gusano_2 < gusano_1):
-        g2_muerto = True
-        gusano_1 = gusano_1 + gusano_2
-        tablero[G2_F][G2_C] = 0
-      else:
-        aux = tablero[G1_F][G1_C]
-        tablero[G1_F][G1_C] = 0
-        tablero[G1_F][G1_C - 1] = tablero[G1_F][G1_C - 1] + aux
-        G1_C = G1_C - 1
-    print("gordura",gusano_1, G1_F, G1_C)
-
-  #Movimiento Gusano 2
-  if not(g2_muerto) and sw == 2:
-    cont_G2 += 1
-    direccion = rn.randint(0,3)
-    print(direccion, G2_F, G2_C)
-    #ARRIBA
-    if direccion == 0 and G2_F > 0: 
-      if tablero[G2_F - 1][G2_C] == -1 or (G2_F - 1 == G1_F and G2_C == G1_C and gusano_2 < gusano_1):
-        g2_muerto = True
-        gusano_1 = gusano_1 + gusano_2
-        tablero[G2_F][G2_C] = 0
-      elif (G2_F - 1 == G1_F and G2_C == G1_C and gusano_2 > gusano_1):
-        g1_muerto = True
-        gusano_2 = gusano_1 + gusano_2
-        tablero[G1_F][G1_C] = 0
-      else:
-        aux = tablero[G2_F][G2_C]
-        tablero[G2_F][G1_C] = 0
-        tablero[G2_F - 1][G2_C] = tablero[G2_F - 1][G2_C] + aux
-        G2_F = G2_F - 1
-    #DERECHA
-    if direccion == 1 and G2_C < dimensiones_matriz - 1: 
-      if tablero[G2_F][G2_C + 1] == -1 or (G2_F == G1_F and G2_C + 1 == G1_C and gusano_2 < gusano_1):
-        g2_muerto = True
-        gusano_1 = gusano_1 + gusano_2
-        tablero[G2_F][G2_C] = 0
-      elif (G2_F == G1_F and G2_C + 1 == G1_C and gusano_2 > gusano_1):
-        g1_muerto = True
-        gusano_2 = gusano_1 + gusano_2
-        tablero[G1_F][G1_C] = 0
-      else:
-        aux = tablero[G2_F][G2_C]
-        tablero[G2_F][G2_C] = 0
-        tablero[G2_F][G2_C + 1] = tablero[G2_F][G2_C + 1] + aux
-        G2_C = G2_C + 1
-    #ABAJO
-    if direccion == 2 and G2_F < dimensiones_matriz - 1: 
-      if tablero[G2_F + 1][G2_C] == -1 or (G2_F + 1 == G1_F and G2_C == G1_C and gusano_2 < gusano_1):
-        g2_muerto = True
-        gusano_1 = gusano_1 + gusano_2
-        tablero[G2_F][G2_C] = 0
-      elif (G2_F + 1 == G1_F and G2_C == G1_C and gusano_2 > gusano_1):
-        g1_muerto = True
-        gusano_2 = gusano_1 + gusano_2
-        tablero[G1_F][G1_C] = 0
-      else:
-        aux = tablero[G2_F][G2_C]
-        tablero[G2_F][G2_C] = 0
-        tablero[G2_F + 1][G2_C] = tablero[G2_F + 1][G2_C] + aux
-        G2_F = G2_F + 1
-    #IZQUIERDA
-    if direccion == 3 and G2_C > 0: 
-      if tablero[G2_F][G2_C - 1] == -1 or (G2_F == G1_F and G2_C - 1 == G1_C and gusano_2 < gusano_1):
-        g2_muerto = True
-        gusano_1 = gusano_1 + gusano_2
-        tablero[G2_F][G2_C] = 0
-      elif (G2_F == G1_F and G2_C - 1 == G1_C and gusano_2 > gusano_1):
-        g1_muerto = True
-        gusano_2 = gusano_1 + gusano_2
-        tablero[G1_F][G1_C] = 0
-      else:
-        aux = tablero[G2_F][G1_C]
-        tablero[G2_F][G2_C] = 0
-        tablero[G2_F][G2_C - 1] = tablero[G2_F][G2_C - 1] + aux
-        G2_C = G2_C - 1
-    print("gordura",gusano_2, G2_F, G2_C)
-
-  if sw == 1:
-    sw = 2
-  else:
-    sw = 1
-  if g1_muerto == True and g2_muerto == True:
-    gusanos_muertos = True
-  cont += 1
-  mostrar_matriz(dimensiones_matriz, tablero)
-  print("\nTiempo transcurrido: ", cont)
-  break
-print("Tiempo total transcurrido: ", cont)
-print("Gordura con que murieron los gusanos: \nGusano 1: ", gusano_1, " \nGusano 2: ", gusano_2)
-
-
-
-
 """ 
 Se pide simular el comportamiento de 2 gusanos dentro de un cuadrado de 15x15, rodeado de paredes.
 Cada gusano siempre ocupará un solo casillero y se podrá mover a lo más a un casillero contiguo. Al principio el
@@ -267,4 +27,297 @@ El proceso debe terminar cuando mueran todos los gusanos.
 Al final se debe indicar cuánto tiempo duró cada gusano y qué “gordura” tenía al morir. 
 """
 
+import random as rn
 
+def vector(cantidad, valorInicial = 0):
+  arreglo = []
+  for i in range(cantidad):
+    arreglo.append(valorInicial)
+  return arreglo
+
+def matrix(filas, columnas, valorInicial = 0):
+  arreglo = []
+  for i in range(filas):
+    arreglo.append([])
+    for j in range(columnas):
+      arreglo[i].append(valorInicial)
+  return arreglo
+
+def mostrar_matriz(tamaño, matriz):
+  for i in range(tamaño):
+    for j in range(tamaño):
+      print(str(matriz[i][j]).rjust(4), end=" ")
+    print("\n")
+
+dimensiones_matriz = int(input("Dimensiones: "))
+tablero = matrix(dimensiones_matriz, dimensiones_matriz)
+
+# Datos agujeros
+print("\nDatos agujeros: ")
+cantidad_agujeros = int(input("Ingrese cantidad de agujeros: "))
+pos_FILA_agujero = vector(cantidad_agujeros)
+pos_COLUMNA_agujero = vector(cantidad_agujeros)
+for i in range(cantidad_agujeros):
+  pos_FILA_agujero[i] = int(input("Ingrese la fila del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+  pos_COLUMNA_agujero[i] = int(input("Ingrese la columna del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+  while (pos_FILA_agujero[i] == 0 and pos_COLUMNA_agujero[i] == 0) or (pos_FILA_agujero[i] == dimensiones_matriz - 1 and pos_COLUMNA_agujero[i] == dimensiones_matriz - 1):
+    print("El agujero no puede estar en el mismo lugar que el gusano")
+    pos_FILA_agujero[i] = int(input("Ingrese la fila del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+    pos_COLUMNA_agujero[i] = int(input("Ingrese la columna del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+  
+  while pos_FILA_agujero[i] < 0 or pos_COLUMNA_agujero[i] < 0 or pos_FILA_agujero[i] > dimensiones_matriz - 1 or pos_COLUMNA_agujero[i] > dimensiones_matriz - 1:
+    print("Error, el agujero está fuera de la matriz... Vuelva a ingresar")
+    pos_FILA_agujero[i] = int(input("Ingrese la fila del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+    pos_COLUMNA_agujero[i] = int(input("Ingrese la columna del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+  
+  for j in range(i):
+    while (pos_FILA_agujero[i] == pos_FILA_agujero[j] and pos_COLUMNA_agujero[i] == pos_COLUMNA_agujero[j]):
+      print("Ya hay un agujero ocupando esta posición. Vuelva a ingresar.")
+      pos_FILA_agujero[i] = int(input("Ingrese la fila del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+      pos_COLUMNA_agujero[i] = int(input("Ingrese la columna del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+  tablero[pos_FILA_agujero[i]][pos_COLUMNA_agujero[i]] = -1
+  print()
+
+# Datos Comida
+print("\nDatos comida: ")
+cantidad_comida = int(input("Ingrese cantidad de comida: "))
+pos_FILA_comida = vector(cantidad_comida) 
+pos_COLUMNA_comida = vector(cantidad_comida)
+valor_comida = vector(cantidad_comida)
+for i in range(cantidad_comida):
+  pos_FILA_comida[i] = int(input("Ingrese la fila del comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): ")) 
+  pos_COLUMNA_comida[i] = int(input("Ingrese la columna del comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+  while (pos_FILA_comida[i] == 0 and pos_COLUMNA_comida[i] == 0) or (pos_FILA_comida[i] == dimensiones_matriz - 1 and pos_COLUMNA_comida[i] == dimensiones_matriz - 1):
+    print("La comida no puede estar en el mismo lugar que el gusano")
+    pos_FILA_comida[i] = int(input("Ingrese la fila del comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): ")) 
+    pos_COLUMNA_comida[i] = int(input("Ingrese la columna del comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+  
+  while pos_FILA_comida[i] < 0 or pos_COLUMNA_comida[i] < 0 or pos_FILA_comida[i] > dimensiones_matriz - 1 or pos_COLUMNA_comida[i] > dimensiones_matriz - 1:
+    print("Error, la comida está fuera de la matriz... Vuelva a ingresar")
+    pos_FILA_comida[i] = int(input("Ingrese la fila de la comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+    pos_COLUMNA_comida[i] = int(input("Ingrese la columna de la comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+  
+  for j in range(i):
+    while (pos_FILA_comida[i] == pos_FILA_comida[j] and pos_COLUMNA_comida[i] == pos_COLUMNA_comida[j]):
+      print("Ya hay comida ocupando esta posición. Vuelva a ingresar.")
+      pos_FILA_comida[i] = int(input("Ingrese la fila de la comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+      pos_COLUMNA_comida[i] = int(input("Ingrese la columna de la comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+  
+  for j in range(cantidad_agujeros):
+    while (pos_FILA_comida[i] == pos_FILA_agujero[j] and pos_COLUMNA_comida[i] == pos_COLUMNA_agujero[j]):
+      print("Ya hay un agujero ocupando esta posición. Vuelva a ingresar comida.")
+      pos_FILA_comida[i] = int(input("Ingrese la fila de la comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+      pos_COLUMNA_comida[i] = int(input("Ingrese la columna de la comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+  valor_comida[i] = int(input("Ingrese el valor de la comida (Máximo 5): "))
+  while valor_comida[i] > 5 or valor_comida[i] < 1:
+    valor_comida[i] = int(input("Vuelva a ingresar el valor de la comida (Máximo 5): "))
+  tablero[pos_FILA_comida[i]][pos_COLUMNA_comida[i]] = valor_comida[i]
+  print()
+
+# Datos Gusanos
+gusano_1 = 1; G1_F = 0; G1_C = 0
+gusano_2 = 1; G2_F = dimensiones_matriz - 1; G2_C = dimensiones_matriz - 1
+tablero[G1_F][G1_C] = gusano_1; tablero[G2_F][G2_C] = gusano_2
+
+for i in range(dimensiones_matriz):
+  for j in range(dimensiones_matriz):
+    print(str(tablero[i][j]).rjust(4), end=" ")
+  print("\n")
+
+for i in range(cantidad_agujeros):
+  print("Posición agujero "+str(i + 1)+": ", pos_FILA_agujero[i], ", ", pos_COLUMNA_agujero[i])
+
+for i in range(cantidad_comida):
+  print("Posición comida "+str(i + 1)+": ", pos_FILA_comida[i], ", ", pos_COLUMNA_comida[i])
+input()
+
+gusanos_muertos = False
+g1_muerto = False; g2_muerto = False
+sw = 1
+cont = 0; cont_G1 = 0; cont_G2 = 0; aux = 0
+while not(gusanos_muertos):
+  #Movimiento Gusano 1
+  if not(g1_muerto) and sw == 1:
+    direccion = rn.randint(0,3)
+    print(direccion, G1_F, G1_C)
+    #ARRIBA
+    if direccion == 0 and G1_F > 0: 
+      if tablero[G1_F - 1][G1_C] == -1:
+        g1_muerto = True
+        tablero[G1_F][G1_C] = 0
+      elif (G2_F == G1_F - 1 and G2_C == G1_C and gusano_2 > gusano_1):
+        g1_muerto = True
+        gusano_2 = gusano_1 + gusano_2
+        tablero[G1_F][G1_C] = 0
+      elif (G2_F == G1_F - 1 and G2_C == G1_C and gusano_2 < gusano_1):
+        g2_muerto = True
+        gusano_1 = gusano_1 + gusano_2
+        tablero[G2_F][G2_C] = 0
+      else:
+        aux = tablero[G1_F][G1_C]
+        tablero[G1_F][G1_C] = 0
+        tablero[G1_F - 1][G1_C] = tablero[G1_F - 1][G1_C] + aux
+        gusano_1 = tablero[G1_F - 1][G1_C]
+        G1_F = G1_F - 1
+        cont_G1 += 1
+    #DERECHA
+    if direccion == 1 and G1_C < dimensiones_matriz - 1: 
+      if tablero[G1_F][G1_C + 1] == -1:
+        g1_muerto = True
+        tablero[G1_F][G1_C] = 0
+      elif (G2_F == G1_F and G2_C == G1_C + 1 and gusano_2 > gusano_1):
+        g1_muerto = True
+        gusano_2 = gusano_1 + gusano_2
+        tablero[G1_F][G1_C] = 0
+      elif (G2_F == G1_F and G2_C == G1_C + 1 and gusano_2 < gusano_1):
+        g2_muerto = True
+        gusano_1 = gusano_1 + gusano_2
+        tablero[G2_F][G2_C] = 0
+      else:
+        aux = tablero[G1_F][G1_C]
+        tablero[G1_F][G1_C] = 0
+        tablero[G1_F][G1_C + 1] = tablero[G1_F][G1_C + 1] + aux
+        gusano_1 = tablero[G1_F][G1_C + 1]
+        G1_C = G1_C + 1
+        cont_G1 += 1
+    #ABAJO
+    if direccion == 2 and G1_F < dimensiones_matriz - 1: 
+      if tablero[G1_F + 1][G1_C] == -1:
+        g1_muerto = True
+        tablero[G1_F][G1_C] = 0
+      elif (G2_F == G1_F + 1 and G2_C == G1_C and gusano_2 > gusano_1):
+        g1_muerto = True
+        gusano_2 = gusano_1 + gusano_2
+        tablero[G1_F][G1_C] = 0
+      elif (G2_F == G1_F + 1 and G2_C == G1_C and gusano_2 < gusano_1):
+        g2_muerto = True
+        gusano_1 = gusano_1 + gusano_2
+        tablero[G2_F][G2_C] = 0
+      else:
+        aux = tablero[G1_F][G1_C]
+        tablero[G1_F][G1_C] = 0
+        tablero[G1_F + 1][G1_C] = tablero[G1_F + 1][G1_C] + aux
+        gusano_1 = tablero[G1_F + 1][G1_C]
+        G1_F = G1_F + 1
+        cont_G1 += 1
+    #IZQUIERDA
+    if direccion == 3 and G1_C > 0: 
+      if tablero[G1_F][G1_C - 1] == -1:
+        g1_muerto = True
+        tablero[G1_F][G1_C] = 0
+      elif (G2_F == G1_F and G2_C == G1_C - 1 and gusano_2 > gusano_1):
+        g1_muerto = True
+        gusano_2 = gusano_1 + gusano_2
+        tablero[G1_F][G1_C] = 0
+      elif (G2_F == G1_F and G2_C == G1_C - 1 and gusano_2 < gusano_1):
+        g2_muerto = True
+        gusano_1 = gusano_1 + gusano_2
+        tablero[G2_F][G2_C] = 0
+      else:
+        aux = tablero[G1_F][G1_C]
+        tablero[G1_F][G1_C] = 0
+        tablero[G1_F][G1_C - 1] = tablero[G1_F][G1_C - 1] + aux
+        gusano_1 = tablero[G1_F][G1_C - 1]
+        G1_C = G1_C - 1
+        cont_G1 += 1
+    print("gordura1",gusano_1, G1_F, G1_C)
+  
+  #Movimiento Gusano 2
+  if not(g2_muerto) and sw == 2:
+    direccion = rn.randint(0,3)
+    print(direccion, G2_F, G2_C)
+    #ARRIBA
+    if direccion == 0 and G2_F > 0: 
+      if tablero[G2_F - 1][G2_C] == -1:
+        g2_muerto = True
+        tablero[G2_F][G2_C] = 0
+      elif (G2_F - 1 == G1_F and G2_C == G1_C and gusano_2 < gusano_1):
+        g2_muerto = True
+        gusano_1 = gusano_1 + gusano_2
+        tablero[G2_F][G2_C] = 0
+      elif (G2_F - 1 == G1_F and G2_C == G1_C and gusano_2 > gusano_1):
+        g1_muerto = True
+        gusano_2 = gusano_1 + gusano_2
+        tablero[G1_F][G1_C] = 0
+      else:
+        aux = tablero[G2_F][G2_C]
+        tablero[G2_F][G2_C] = 0
+        tablero[G2_F - 1][G2_C] = tablero[G2_F - 1][G2_C] + aux
+        gusano_2 = tablero[G2_F - 1][G2_C]
+        G2_F = G2_F - 1
+        cont_G2 += 1
+    #DERECHA
+    if direccion == 1 and G2_C < dimensiones_matriz - 1: 
+      if tablero[G2_F][G2_C + 1] == -1:
+        g2_muerto = True
+        tablero[G2_F][G2_C] = 0
+      elif (G2_F == G1_F and G2_C + 1 == G1_C and gusano_2 < gusano_1):
+        g2_muerto = True
+        gusano_1 = gusano_1 + gusano_2
+        tablero[G2_F][G2_C] = 0
+      elif (G2_F == G1_F and G2_C + 1 == G1_C and gusano_2 > gusano_1):
+        g1_muerto = True
+        gusano_2 = gusano_1 + gusano_2
+        tablero[G1_F][G1_C] = 0
+      else:
+        aux = tablero[G2_F][G2_C]
+        tablero[G2_F][G2_C] = 0
+        tablero[G2_F][G2_C + 1] = tablero[G2_F][G2_C + 1] + aux
+        gusano_2 = tablero[G2_F][G2_C + 1]
+        G2_C = G2_C + 1
+        cont_G2 += 1
+    #ABAJO
+    if direccion == 2 and G2_F < dimensiones_matriz - 1: 
+      if tablero[G2_F + 1][G2_C] == -1:
+        g2_muerto = True
+        tablero[G2_F][G2_C] = 0
+      elif (G2_F + 1 == G1_F and G2_C == G1_C and gusano_2 < gusano_1):
+        g2_muerto = True
+        gusano_1 = gusano_1 + gusano_2
+        tablero[G2_F][G2_C] = 0
+      elif (G2_F + 1 == G1_F and G2_C == G1_C and gusano_2 > gusano_1):
+        g1_muerto = True
+        gusano_2 = gusano_1 + gusano_2
+        tablero[G1_F][G1_C] = 0
+      else:
+        aux = tablero[G2_F][G2_C]
+        tablero[G2_F][G2_C] = 0
+        tablero[G2_F + 1][G2_C] = tablero[G2_F + 1][G2_C] + aux
+        gusano_2 = tablero[G2_F + 1][G2_C]
+        G2_F = G2_F + 1
+        cont_G2 += 1
+    #IZQUIERDA
+    if direccion == 3 and G2_C > 0: 
+      if tablero[G2_F][G2_C - 1] == -1:
+        g2_muerto = True
+        tablero[G2_F][G2_C] = 0
+      elif (G2_F == G1_F and G2_C - 1 == G1_C and gusano_2 < gusano_1):
+        g2_muerto = True
+        gusano_1 = gusano_1 + gusano_2
+        tablero[G2_F][G2_C] = 0
+      elif (G2_F == G1_F and G2_C - 1 == G1_C and gusano_2 > gusano_1):
+        g1_muerto = True
+        gusano_2 = gusano_1 + gusano_2
+        tablero[G1_F][G1_C] = 0
+      else:
+        aux = tablero[G2_F][G2_C]
+        tablero[G2_F][G2_C] = 0
+        tablero[G2_F][G2_C - 1] = tablero[G2_F][G2_C - 1] + aux
+        gusano_2 = tablero[G2_F][G2_C - 1]
+        G2_C = G2_C - 1
+        cont_G2 += 1
+    print("gordura2",gusano_2, G2_F, G2_C)
+  
+  if sw == 1 and not(g2_muerto):
+    sw = 2
+  else:
+    if sw == 2 and not(g1_muerto):
+      sw = 1
+  if g1_muerto == True and g2_muerto == True:
+    gusanos_muertos = True
+  cont += 1
+  mostrar_matriz(dimensiones_matriz, tablero)
+  print("\nTiempo transcurrido: ", cont, "Sw: ", sw, "g1: ", g1_muerto, "g2: ", g2_muerto)
+  #input("PRESIONE ENTER")
+print("Tiempo total transcurrido: ", cont)
+print("Gordura con que murieron los gusanos: \nGusano 1: ", gusano_1, " \nGusano 2: ", gusano_2)

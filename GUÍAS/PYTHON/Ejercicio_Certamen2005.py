@@ -42,56 +42,103 @@ def matrix(filas, columnas, valorInicial = 0):
       arreglo[i].append(valorInicial)
   return arreglo
 
-def movimiento_gusanos(gusano, tablero, Fila, Columna, tamaño):
-  direccion = rn.randint(0,3)
-  print(direccion, Fila, Columna)
-  if direccion == 0 and Fila > 0: #ARRIBA
-    if tablero[Fila - 1][Columna] == "[X]":
-      gusano = 0
-    else:
-      aux = tablero[Fila][Columna]
-      tablero[Fila][Columna] = 0
-      tablero[Fila - 1][Columna] = tablero[Fila - 1][Columna] + aux
-      Fila = Fila - 1
-
-  if direccion == 1 and Columna < tamaño - 1: #DERECHA
-    if tablero[Fila][Columna + 1] == "[X]":
-      gusano = 0
-    else:
-      aux = tablero[Fila][Columna]
-      tablero[Fila][Columna] = 0
-      tablero[Fila][Columna + 1] = tablero[Fila][Columna + 1] + aux
-      Columna = Columna + 1
-
-  if direccion == 2 and Fila < tamaño - 1: #ABAJO
-    if tablero[Fila + 1][Columna] == "[X]":
-      gusano = 0
-    else:
-      aux = tablero[Fila][Columna]
-      tablero[Fila][Columna] = 0
-      tablero[Fila + 1][Columna] = tablero[Fila + 1][Columna] + aux
-      Fila = Fila + 1
-
-  if direccion == 3 and Columna > 0: #IZQUIERDA
-    if tablero[Fila][Columna - 1] == "[X]":
-      gusano = 0
-    else:
-      aux = tablero[Fila][Columna]
-      tablero[Fila][Columna] = 0
-      tablero[Fila][Columna - 1] = tablero[Fila][Columna - 1] + aux
-      Columna = Columna - 1
-  input()
-  return tablero, gusano, Fila, Columna
-
 def mostrar_matriz(tamaño, matriz):
   for i in range(tamaño):
     for j in range(tamaño):
       print(str(matriz[i][j]).rjust(4), end=" ")
     print("\n")
 
+def mover_gusanos(MATRIZ, F1, F2, C1, C2, G1, G2, VIVO1, VIVO2, CONT):
+  direccion = rn.randint(0,3)
+  print(direccion, F1, C1)
+  #ARRIBA
+  if direccion == 0 and F1 > 0: 
+    if MATRIZ[F1 - 1][C1] == -1:
+      VIVO1 = True
+      MATRIZ[F1][C1] = 0
+    elif (F1 - 1 == F2 and C1 == C2 and G1 < G2):
+      VIVO1 = True
+      G2 = G2 + G1
+      MATRIZ[F1][C1] = 0
+    elif (F1 - 1 == F2 and C1 == C2 and G1 > G2):
+      VIVO2 = True
+      G1 = G2 + G1
+      MATRIZ[F2][C2] = 0
+    else:
+      aux = MATRIZ[F1][C1]
+      MATRIZ[F1][C1] = 0
+      MATRIZ[F1 - 1][C1] = MATRIZ[F1 - 1][C1] + aux
+      G1 = MATRIZ[F1 - 1][C1]
+      F1 = F1 - 1
+      CONT += 1
+  #DERECHA
+  if direccion == 1 and C1 < dimensiones_matriz - 1: 
+    if MATRIZ[F1][C1 + 1] == -1:
+      VIVO1 = True
+      MATRIZ[F1][C1] = 0
+    elif (F1 == F2 and C1 + 1 == C2 and G1 < G2):
+      VIVO1 = True
+      G2 = G2 + G1
+      MATRIZ[F1][C1] = 0
+    elif (F1 == F2 and C1 + 1 == C2 and G1 > G2):
+      VIVO2 = True
+      G1 = G2 + G1
+      MATRIZ[F2][C2] = 0
+    else:
+      aux = MATRIZ[F1][C1]
+      MATRIZ[F1][C1] = 0
+      MATRIZ[F1][C1 + 1] = MATRIZ[F1][C1 + 1] + aux
+      G1 = MATRIZ[F1][C1 + 1]
+      C1 = C1 + 1
+      CONT += 1
+  #ABAJO
+  if direccion == 2 and F1 < dimensiones_matriz - 1: 
+    if MATRIZ[F1 + 1][C1] == -1:
+      VIVO1 = True
+      MATRIZ[F1][C1] = 0
+    elif (F1 + 1 == F2 and C1 == C2 and G1 < G2):
+      VIVO1 = True
+      G2 = G2 + G1
+      MATRIZ[F1][C1] = 0
+    elif (F1 + 1 == F2 and C1 == C2 and G1 > G2):
+      VIVO2 = True
+      G1 = G2 + G1
+      MATRIZ[F2][C2] = 0
+    else:
+      aux = MATRIZ[F1][C1]
+      MATRIZ[F1][C1] = 0
+      MATRIZ[F1 + 1][C1] = MATRIZ[F1 + 1][C1] + aux
+      G1 = MATRIZ[F1 + 1][C1]
+      F1 = F1 + 1
+      CONT += 1
+  #IZQUIERDA
+  if direccion == 3 and C1 > 0: 
+    if MATRIZ[F1][C1 - 1] == -1:
+      VIVO1 = True
+      MATRIZ[F1][C1] = 0
+    elif (F1 == F2 and C1 - 1 == C2 and G1 < G2):
+      VIVO1 = True
+      G2 = G2 + G1
+      MATRIZ[F1][C1] = 0
+    elif (F1 == F2 and C1 - 1 == C2 and G1 > G2):
+      VIVO2 = True
+      G1 = G2 + G1
+      MATRIZ[F2][C2] = 0
+    else:
+      aux = MATRIZ[F1][C1]
+      MATRIZ[F1][C1] = 0
+      MATRIZ[F1][C1 - 1] = MATRIZ[F1][C1 - 1] + aux
+      G1 = MATRIZ[F1][C1 - 1]
+      C1 = C1 - 1
+      CONT += 1
+  print("DATOS: \nGORD: ",G1," Posición: ", F1, C1)
+  return MATRIZ, F1, F2, C1, C2, G1, G2, VIVO1, VIVO2, CONT
+
+
 dimensiones_matriz = int(input("Dimensiones: "))
 tablero = matrix(dimensiones_matriz, dimensiones_matriz)
 
+# Datos agujeros
 print("\nDatos agujeros: ")
 cantidad_agujeros = int(input("Ingrese cantidad de agujeros: "))
 pos_FILA_agujero = vector(cantidad_agujeros)
@@ -109,15 +156,20 @@ for i in range(cantidad_agujeros):
     pos_FILA_agujero[i] = int(input("Ingrese la fila del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
     pos_COLUMNA_agujero[i] = int(input("Ingrese la columna del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
   
-  tablero[pos_FILA_agujero[i]][pos_COLUMNA_agujero[i]] = "[X]"
+  for j in range(i):
+    while (pos_FILA_agujero[i] == pos_FILA_agujero[j] and pos_COLUMNA_agujero[i] == pos_COLUMNA_agujero[j]):
+      print("Ya hay un agujero ocupando esta posición. Vuelva a ingresar.")
+      pos_FILA_agujero[i] = int(input("Ingrese la fila del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+      pos_COLUMNA_agujero[i] = int(input("Ingrese la columna del agujero " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+  tablero[pos_FILA_agujero[i]][pos_COLUMNA_agujero[i]] = -1
   print()
 
+# Datos Comida
 print("\nDatos comida: ")
 cantidad_comida = int(input("Ingrese cantidad de comida: "))
 pos_FILA_comida = vector(cantidad_comida) 
 pos_COLUMNA_comida = vector(cantidad_comida)
 valor_comida = vector(cantidad_comida)
-
 for i in range(cantidad_comida):
   pos_FILA_comida[i] = int(input("Ingrese la fila del comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): ")) 
   pos_COLUMNA_comida[i] = int(input("Ingrese la columna del comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
@@ -125,18 +177,30 @@ for i in range(cantidad_comida):
     print("La comida no puede estar en el mismo lugar que el gusano")
     pos_FILA_comida[i] = int(input("Ingrese la fila del comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): ")) 
     pos_COLUMNA_comida[i] = int(input("Ingrese la columna del comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
-
+  
   while pos_FILA_comida[i] < 0 or pos_COLUMNA_comida[i] < 0 or pos_FILA_comida[i] > dimensiones_matriz - 1 or pos_COLUMNA_comida[i] > dimensiones_matriz - 1:
     print("Error, la comida está fuera de la matriz... Vuelva a ingresar")
     pos_FILA_comida[i] = int(input("Ingrese la fila de la comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
     pos_COLUMNA_comida[i] = int(input("Ingrese la columna de la comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
-
+  
+  for j in range(i):
+    while (pos_FILA_comida[i] == pos_FILA_comida[j] and pos_COLUMNA_comida[i] == pos_COLUMNA_comida[j]):
+      print("Ya hay comida ocupando esta posición. Vuelva a ingresar.")
+      pos_FILA_comida[i] = int(input("Ingrese la fila de la comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+      pos_COLUMNA_comida[i] = int(input("Ingrese la columna de la comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+  
+  for j in range(cantidad_agujeros):
+    while (pos_FILA_comida[i] == pos_FILA_agujero[j] and pos_COLUMNA_comida[i] == pos_COLUMNA_agujero[j]):
+      print("Ya hay un agujero ocupando esta posición. Vuelva a ingresar comida.")
+      pos_FILA_comida[i] = int(input("Ingrese la fila de la comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
+      pos_COLUMNA_comida[i] = int(input("Ingrese la columna de la comida " + str(i + 1) + " (0 a "+str(dimensiones_matriz - 1)+"): "))
   valor_comida[i] = int(input("Ingrese el valor de la comida (Máximo 5): "))
   while valor_comida[i] > 5 or valor_comida[i] < 1:
     valor_comida[i] = int(input("Vuelva a ingresar el valor de la comida (Máximo 5): "))
-  print()
   tablero[pos_FILA_comida[i]][pos_COLUMNA_comida[i]] = valor_comida[i]
+  print()
 
+# Datos Gusanos
 gusano_1 = 1; G1_F = 0; G1_C = 0
 gusano_2 = 1; G2_F = dimensiones_matriz - 1; G2_C = dimensiones_matriz - 1
 tablero[G1_F][G1_C] = gusano_1; tablero[G2_F][G2_C] = gusano_2
@@ -145,34 +209,39 @@ for i in range(dimensiones_matriz):
   for j in range(dimensiones_matriz):
     print(str(tablero[i][j]).rjust(4), end=" ")
   print("\n")
+
 for i in range(cantidad_agujeros):
   print("Posición agujero "+str(i + 1)+": ", pos_FILA_agujero[i], ", ", pos_COLUMNA_agujero[i])
+
 for i in range(cantidad_comida):
   print("Posición comida "+str(i + 1)+": ", pos_FILA_comida[i], ", ", pos_COLUMNA_comida[i])
 input()
 
+# Movimiento Gusanos
 gusanos_muertos = False
+g1_muerto = False; g2_muerto = False
 sw = 1
-cont = 0
-while not gusanos_muertos:
-  if gusano_1 > 0 and sw == 1:
-    movimiento_gusanos(gusano_1, tablero, G1_F, G1_C, dimensiones_matriz)
-    print("gordura",gusano_1, G1_F, G1_C)
-  if gusano_2 > 0 and sw == 2:
-    movimiento_gusanos(gusano_2, tablero, G2_F, G2_C, dimensiones_matriz)
-    print("gordura",gusano_2, G2_F, G2_C)
-  if sw == 1:
+cont = 0; cont_G1 = 0; cont_G2 = 0; aux = 0
+while not(gusanos_muertos):
+  #Movimiento Gusano 1
+  if not(g1_muerto) and sw == 1:
+    mover_gusanos(tablero, G1_F, G2_F, G1_C, G2_C, gusano_1, gusano_2, g1_muerto, g2_muerto, cont_G1)
+  
+  #Movimiento Gusano 2
+  if not(g2_muerto) and sw == 2:
+    mover_gusanos(tablero, G2_F, G1_F, G2_C, G1_C, gusano_2, gusano_1, g2_muerto, g1_muerto, cont_G2)
+  
+  if sw == 1 and not(g2_muerto):
     sw = 2
   else:
-    sw = 1
-  if gusano_1 + gusano_2 == 0:
-    gusanos_muertos == True
+    if sw == 2 and not(g1_muerto):
+      sw = 1
+  if g1_muerto == True and g2_muerto == True:
+    gusanos_muertos = True
   cont += 1
   mostrar_matriz(dimensiones_matriz, tablero)
-  print("\nTiempo transcurrido: ", cont)
+  print("\nTiempo transcurrido: ", cont, "Sw: ", sw, "g1: ", g1_muerto, "g2: ", g2_muerto)
+  
+  #input("PRESIONE ENTER")
 print("Tiempo total transcurrido: ", cont)
 print("Gordura con que murieron los gusanos: \nGusano 1: ", gusano_1, " \nGusano 2: ", gusano_2)
-
-
-
-
