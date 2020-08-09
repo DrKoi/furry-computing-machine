@@ -319,5 +319,6 @@ while not(gusanos_muertos):
   mostrar_matriz(dimensiones_matriz, tablero)
   print("\nTiempo transcurrido: ", cont, "Sw: ", sw, "g1: ", g1_muerto, "g2: ", g2_muerto)
   #input("PRESIONE ENTER")
+
 print("Tiempo total transcurrido: ", cont)
 print("Gordura con que murieron los gusanos: \nGusano 1: ", gusano_1, " \nGusano 2: ", gusano_2)
