@@ -5,12 +5,16 @@ def DIM_VECTOR(Max, Valor = 0):
     return arreglo
 
 numero = int(input("Ingrese un número entero positivo de no más de 10 Cifras: "))
-while len(numero) > 10 or numero < 0:
+while len(str(numero)) > 10 or numero < 0:
         print("Error. Debe ser un valor positivo de hasta 10 cifras.")
         numero = int(input("Vuelva a ingresar el número: "))
-n = len(numero)
+n = len(str(numero))
 A = DIM_VECTOR(10)
 
+for i in range(n):
+  A[i] = int(str(numero)[i])
+
+print(A)
 
 
 
