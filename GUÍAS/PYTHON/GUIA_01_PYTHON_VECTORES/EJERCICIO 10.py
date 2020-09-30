@@ -5,10 +5,10 @@ procesar el arreglo de tal forma que despliegue por pantalla los valores almacen
 corrimiento 
 """
 def DIM_VECTOR(Max, Valor = 0):
-    arreglo = []    
-    for i in range(Max):
-        arreglo.append(Valor)
-    return arreglo
+  arreglo = []    
+  for i in range(Max):
+    arreglo.append(Valor)
+  return arreglo
 
 A = DIM_VECTOR(9)
 palabra = input("Ingrese una palabra de 9 caracteres: ")
