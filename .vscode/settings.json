@@ -1,5 +1,4 @@
 {
-    "editor.tabSize": 2,
-    "editor.detectIndentation": false,
+  "editor.detectIndentation": false,
     "python.pythonPath": "C:\\Users\\kfigu\\AppData\\Local\\Programs\\Python\\Python38-32\\python.exe"
 }
