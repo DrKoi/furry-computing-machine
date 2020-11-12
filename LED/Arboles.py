@@ -35,9 +35,47 @@ def crear_arbol():
     nodo_F = tipo_nodo()
     nodo_F.valor = "F"
     nodo_C.LEFT = nodo_F
-
     return nodo_raiz
 
-raiz = crear_arbol()
+def pre_orden(Puntero):
+    global valor_buscado
+    if Puntero != None:
+        print(Puntero.valor)
+        if Puntero.valor == valor_buscado:
+            print("Lo encontré")
+        pre_orden(Puntero.LEFT)
+        pre_orden(Puntero.RIGHT)
 
-print("hola mundo")
+def in_orden(Puntero):
+    global valor_buscado
+    if Puntero != None:
+        in_orden(Puntero.LEFT)
+        print(Puntero.valor)
+        if Puntero.valor == valor_buscado:
+            print("Lo encontré")
+        in_orden(Puntero.RIGHT)
+
+def post_orden(Puntero):
+    global valor_buscado
+    if Puntero != None:
+        post_orden(Puntero.LEFT)
+        post_orden(Puntero.RIGHT)
+        print(Puntero.valor)
+        if Puntero.valor == valor_buscado:
+            print("Lo encontré")
+        
+
+""" def modulo():
+    variable = input()
+    if variable != "X":
+        MODULO()
+        print(variable) """
+
+
+raiz = crear_arbol()
+valor_buscado = input("Ingrese una letra: ")
+pre_orden(raiz) 
+print()
+in_orden(raiz)
+print()
+post_orden(raiz)
